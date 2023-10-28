@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>blog</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+    }
+  }
+  </script>
+
+  <script type="module">
+  import { store } from './store.js'
+  import { createApp, computed } from 'vue'
+  import BlogLogin from './blog-login.js'
+  import BlogHome from './blog-home.js'
+
+  createApp({
+    setup() {
+      const currentView = computed(() => {
+        return store.isAuthenticated ? BlogHome : BlogLogin
+      })
+      return { currentView }
+    },
+    template: /*html*/`
+      <component :is="currentView" />`
+  }).mount('#app')
+  </script>
+
+</body>
+</html>
